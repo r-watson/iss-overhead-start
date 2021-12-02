@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 import smtplib
 import time
 
@@ -41,8 +41,8 @@ def is_iss_overhead():
     my_long_high = MY_LONG + 5
 
     # test values
-    iss_latitude = 37.5644
-    iss_longitude = -72.4564
+    # iss_latitude = 37.5644
+    # iss_longitude = -72.4564
 
     # If the ISS is close to my current position
     if my_lat_low <= iss_latitude <= my_lat_high and my_long_low < iss_longitude < my_long_high:
@@ -63,12 +63,12 @@ def is_night():
     sunrise = int(sunset_data["results"]["sunrise"].split("T")[1].split(":")[0])
     sunset = int(sunset_data["results"]["sunset"].split("T")[1].split(":")[0])
 
-    time_now = datetime.now()
+    time_now = datetime.now(timezone.utc)
     current_hour = time_now.hour
-    # print(f"time = {current_hour}, sunrise = {sunrise}, sunset = {sunset}")
+    print(f"time = {current_hour}, sunrise = {sunrise}, sunset = {sunset}")
 
     # test value
-    current_hour = 3
+    # current_hour = 3
     # and it is currently dark
     if current_hour >= sunset or current_hour <= sunrise:
         # BONUS: run the code every 60 seconds.
