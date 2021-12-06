@@ -1,10 +1,11 @@
+import os
 import requests
 from datetime import datetime, timezone
 import smtplib
 import time
 
-MY_LAT = 39.960339  # Your latitude
-MY_LONG = -76.734673  # Your longitude
+MY_LAT = 42.960339  # Your latitude
+MY_LONG = -7.734673  # Your longitude
 
 
 def send_mail():
@@ -20,7 +21,7 @@ From: {sender}
 
 Look up!"""
     with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
-        server.login("6e9cda1e96c233", "f79a7290f26ade")
+        server.login("6e9cda1e96c233", os.environ.get("MAILTRAP_PASSWORD"))
         server.sendmail(sender, receiver, message)
 
 
@@ -32,7 +33,7 @@ def is_iss_overhead():
     iss_latitude = float(data["iss_position"]["latitude"])
     iss_longitude = float(data["iss_position"]["longitude"])
 
-    # print(f"mylat = {MY_LAT}, mylon = {MY_LONG}, isslat = {iss_latitude}, isslong = {iss_longitude}")
+    print(f"mylat = {MY_LAT}, mylon = {MY_LONG}, isslat = {iss_latitude}, isslong = {iss_longitude}")
 
     #Your position is within +5 or -5 degrees of the ISS position.
     my_lat_low = MY_LAT - 5
